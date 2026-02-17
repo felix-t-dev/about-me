@@ -1,0 +1,322 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  User, Cpu, Code, Terminal, Mail, Shield, Globe, Zap, 
+  Database, Layers, ChevronRight, ExternalLink, Activity,
+  Settings, Battery, Wifi, MousePointer2, AlertTriangle
+} from 'lucide-react';
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('home');
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isOverloaded, setIsOverloaded] = useState(false);
+  const [systemLog, setSystemLog] = useState("SYSTEM_READY");
+  const containerRef = useRef(null);
+
+  const accentCyan = '#01ffff';
+  const accentMagenta = '#ff00ff';
+  const accentGold = '#ffcc00';
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePos({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        });
+      }
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const handleReactorClick = () => {
+    setIsOverloaded(true);
+    setSystemLog("POWER_OVERLOAD_DETECTED");
+    
+    setTimeout(() => {
+      setSystemLog("REBOOTING_SYSTEM...");
+    }, 1500);
+
+    setTimeout(() => {
+      setIsOverloaded(false);
+      setSystemLog("SYSTEM_STABLE");
+    }, 3000);
+  };
+
+  const sections = {
+    home: { title: 'CORE.UNIT', icon: <Activity size={18} />, color: accentCyan },
+    about: { title: 'BIO.SCAN', icon: <User size={18} />, color: accentMagenta },
+    skills: { title: 'TECH.MAP', icon: <Cpu size={18} />, color: accentGold },
+    projects: { title: 'ARCHIVE', icon: <Layers size={18} />, color: accentCyan },
+    contact: { title: 'SIGNAL', icon: <Wifi size={18} />, color: accentMagenta }
+  };
+
+  const SkillOrb = ({ label, level, color }) => (
+    <div className="relative group flex flex-col items-center">
+      <div className="w-24 h-24 rounded-full border-2 flex items-center justify-center relative transition-all duration-500 group-hover:scale-110" 
+           style={{ borderColor: `${color}33`, boxShadow: `0 0 15px ${color}22` }}>
+        <svg className="absolute inset-0 w-full h-full -rotate-90">
+          <circle
+            cx="48" cy="48" r="44"
+            fill="transparent"
+            stroke={color}
+            strokeWidth="2"
+            strokeDasharray="276"
+            strokeDashoffset={276 - (276 * level) / 100}
+            className="transition-all duration-1000 ease-out"
+          />
+        </svg>
+        <span className="text-lg font-bold font-mono" style={{ color }}>{level}%</span>
+      </div>
+      <span className="mt-2 text-[10px] font-mono tracking-tighter uppercase opacity-70">{label}</span>
+    </div>
+  );
+
+  return (
+    <div 
+      ref={containerRef}
+      className={`min-h-screen transition-all duration-300 font-sans selection:bg-[#01ffff] selection:text-black overflow-x-hidden ${isOverloaded ? 'bg-red-950 animate-shake' : 'bg-[#050b1a] text-white'}`}
+      style={{
+        backgroundImage: isOverloaded 
+          ? `radial-gradient(circle at center, #ff0000 0%, #050b1a 60%)`
+          : `radial-gradient(circle at ${mousePos.x}px ${mousePos.y}px, #1a2a4a 0%, #050b1a 40%)`
+      }}
+    >
+      <div className="fixed inset-0 pointer-events-none z-50">
+        <div className="absolute top-4 right-8 flex items-center gap-6 font-mono text-[10px] opacity-60">
+          <div className="flex items-center gap-2">
+            <Battery size={14} className={isOverloaded ? "text-red-500 animate-pulse" : "text-green-400"} /> 
+            {isOverloaded ? "!! ERROR !!" : "100%"}
+          </div>
+          <div className="flex items-center gap-2">
+            <Wifi size={14} className={isOverloaded ? "text-red-500" : "text-blue-400"} /> 
+            {isOverloaded ? "NO_SIGNAL" : "STABLE"}
+          </div>
+          <div className="flex items-center gap-2">
+            <Settings size={14} className={`animate-spin-slow ${isOverloaded ? "text-red-500" : ""}`} /> v4.0.2
+          </div>
+        </div>
+        
+        <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 opacity-20" style={{ borderColor: isOverloaded ? '#ff0000' : accentCyan }}></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 border-b-2 border-r-2 opacity-20" style={{ borderColor: isOverloaded ? '#ff0000' : accentMagenta }}></div>
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-12">
+        <header className="mb-12 relative">
+          <div className="flex flex-col md:flex-row justify-between items-start">
+            <div className="animate-slideIn">
+              <div className="flex items-center gap-2 mb-2">
+                <div className={`h-[2px] w-12 ${isOverloaded ? 'bg-red-500' : 'bg-cyan-400'}`}></div>
+                <span className={`text-xs font-mono tracking-[0.3em] ${isOverloaded ? 'text-red-500' : 'text-cyan-400'}`}>
+                    {isOverloaded ? 'CRITICAL_FAILURE' : 'NEURAL_INTERFACE_V4'}
+                </span>
+              </div>
+              <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none">
+                {isOverloaded ? 'ERROR' : 'STARK'}{' '}
+                <span className="text-transparent bg-clip-text" style={{ 
+                    WebkitTextFillColor: 'transparent', 
+                    backgroundImage: isOverloaded 
+                        ? `linear-gradient(45deg, #ff0000, #990000)` 
+                        : `linear-gradient(45deg, ${accentCyan}, ${accentMagenta}, ${accentGold})` 
+                }}>
+                    {isOverloaded ? '404' : 'LEVEL'}
+                </span>
+              </h1>
+              <p className="mt-4 text-gray-400 font-mono text-sm max-w-md">
+                {isOverloaded ? "CRITICAL SYSTEM OVERLOAD DETECTED. INITIATING EMERGENCY PROTOCOLS." : "Deploying high-fidelity digital solutions with architectural precision."}
+              </p>
+            </div>
+            
+            <div 
+                className="mt-8 md:mt-0 relative w-32 h-32 flex items-center justify-center group cursor-pointer"
+                onClick={handleReactorClick}
+            >
+              <div className={`absolute inset-0 border-4 border-dashed rounded-full animate-spin-slow ${isOverloaded ? 'border-red-500' : 'border-cyan-500/20 group-hover:border-cyan-500/50'}`}></div>
+              <div className={`absolute inset-2 border-2 rounded-full animate-spin-reverse ${isOverloaded ? 'border-red-600 scale-125' : 'border-magenta-500/20 group-hover:border-magenta-500/50'}`}></div>
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${isOverloaded ? 'bg-red-500 scale-150 shadow-[0_0_50px_#ff0000]' : 'bg-white shadow-[0_0_30px_#01ffff] group-hover:scale-125'}`}>
+                 {isOverloaded ? <AlertTriangle size={24} className="text-white animate-pulse" /> : <Zap size={20} className="text-cyan-600 animate-pulse" />}
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <nav className="lg:col-span-3 space-y-3">
+            {Object.entries(sections).map(([id, { title, icon, color }]) => (
+              <button
+                key={id}
+                onClick={() => !isOverloaded && setActiveTab(id)}
+                className={`group relative w-full flex items-center gap-4 px-6 py-4 font-mono text-xs tracking-widest transition-all clip-path-tech ${
+                  activeTab === id 
+                    ? 'bg-white/10 text-white' 
+                    : 'text-gray-500 hover:text-white hover:bg-white/5'
+                } ${isOverloaded ? 'opacity-20 cursor-not-allowed' : ''}`}
+              >
+                <div className={`absolute left-0 top-0 bottom-0 w-1 transition-all ${activeTab === id ? 'opacity-100' : 'opacity-0'}`} style={{ backgroundColor: color, boxShadow: `0 0 15px ${color}` }}></div>
+                <span style={{ color: activeTab === id ? color : 'inherit' }}>{icon}</span>
+                {title}
+              </button>
+            ))}
+          </nav>
+
+          <main className="lg:col-span-9 relative min-h-[550px]">
+            <div className={`h-full border backdrop-blur-xl p-8 rounded-tr-3xl rounded-bl-3xl relative overflow-hidden transition-colors duration-500 ${isOverloaded ? 'border-red-500/50 bg-red-950/20' : 'border-white/10 bg-white/5'}`}>
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+              
+              <div className="relative z-10 animate-fadeIn">
+                {isOverloaded ? (
+                  <div className="h-[400px] flex flex-col items-center justify-center text-center space-y-6">
+                    <div className="text-red-500 animate-pulse font-mono text-xl font-bold">!!! CRITICAL SYSTEM ERROR !!!</div>
+                    <div className="font-mono text-[10px] text-red-400 space-y-1">
+                        <div>DUMPING_MEMORY_BLOCKS... [OK]</div>
+                        <div>FLUSHING_AR_CORES... [FAIL]</div>
+                        <div>EMERGENCY_VENTING... [PENDING]</div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    {activeTab === 'home' && (
+                      <div className="space-y-8">
+                        <h2 className="text-3xl font-bold uppercase tracking-tighter flex items-center gap-3">
+                          <Activity className="text-cyan-400" /> Global Diagnostics
+                        </h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                          <div className="p-6 border border-white/5 bg-black/20 rounded-xl">
+                            <div className="text-cyan-400 text-2xl font-black mb-1">99.9%</div>
+                            <div className="text-[10px] font-mono text-gray-500 uppercase">Uptime Reliability</div>
+                          </div>
+                          <div className="p-6 border border-white/5 bg-black/20 rounded-xl">
+                            <div className="text-magenta-400 text-2xl font-black mb-1">240ms</div>
+                            <div className="text-[10px] font-mono text-gray-500 uppercase">Avg Latency</div>
+                          </div>
+                          <div className="p-6 border border-white/5 bg-black/20 rounded-xl">
+                            <div className="text-yellow-400 text-2xl font-black mb-1">12k+</div>
+                            <div className="text-[10px] font-mono text-gray-500 uppercase">Commits</div>
+                          </div>
+                        </div>
+                        <div className="p-8 border border-cyan-500/10 bg-cyan-500/5 rounded-2xl">
+                          <h3 className="text-xl font-bold mb-4 uppercase italic text-cyan-400">Mission Statement</h3>
+                          <p className="text-gray-400 leading-relaxed font-medium">
+                            Engineering digital environments with peak efficiency. Specializing in high-performance 3D interfaces and scalable backend architecture.
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeTab === 'about' && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div className="relative">
+                          <div className="aspect-square bg-gradient-to-br from-magenta-500/20 to-transparent border border-white/10 rounded-2xl flex items-center justify-center overflow-hidden">
+                            <User size={120} className="text-magenta-500 opacity-20" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-magenta-500/30 to-transparent h-1/4 animate-scan-fast"></div>
+                          </div>
+                        </div>
+                        <div className="space-y-6">
+                          <h2 className="text-3xl font-black italic uppercase">Subject_Identity</h2>
+                          <p className="text-sm text-gray-400 leading-relaxed">
+                            Elite software engineer bridging code and visual fidelity. Background in computational design and systems architecture.
+                          </p>
+                          <ul className="space-y-3 font-mono text-[10px] uppercase">
+                            <li className="flex justify-between border-b border-white/5 pb-2">
+                              <span className="text-gray-500">EXPERIENCE:</span>
+                              <span className="text-magenta-400">8+ CYCLES</span>
+                            </li>
+                            <li className="flex justify-between border-b border-white/5 pb-2">
+                              <span className="text-gray-500">CLASS:</span>
+                              <span className="text-magenta-400">FULL-STACK ARCHITECT</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    {activeTab === 'skills' && (
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
+                        <SkillOrb label="React / Next" level={95} color={accentCyan} />
+                        <SkillOrb label="Node / JS" level={90} color={accentMagenta} />
+                        <SkillOrb label="Cloud / AWS" level={85} color={accentGold} />
+                        <SkillOrb label="Python / AI" level={75} color={accentCyan} />
+                        <SkillOrb label="PostgreSQL" level={88} color={accentMagenta} />
+                        <SkillOrb label="Three.js" level={70} color={accentGold} />
+                        <SkillOrb label="TypeScript" level={92} color={accentCyan} />
+                        <SkillOrb label="Tailwind" level={98} color={accentMagenta} />
+                      </div>
+                    )}
+
+                    {activeTab === 'projects' && (
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[1, 2, 3, 4].map(i => (
+                          <div key={i} className="group relative bg-black/40 border border-white/10 rounded-xl p-6 hover:translate-y-[-4px] transition-all">
+                            <div className="absolute top-0 left-0 w-1 h-0 bg-cyan-400 group-hover:h-full transition-all duration-500"></div>
+                            <div className="flex justify-between items-start mb-4">
+                              <h3 className="font-bold text-lg uppercase tracking-tight">Mission_Archive_{i}</h3>
+                              <ExternalLink size={16} className="text-gray-600 group-hover:text-cyan-400" />
+                            </div>
+                            <p className="text-xs text-gray-500 mb-4">Advanced neural interface for distributed data processing and real-time visualization.</p>
+                            <div className="flex gap-2">
+                              <span className="text-[8px] font-mono border border-cyan-500/30 text-cyan-400 px-2 py-0.5 rounded">WEBGL</span>
+                              <span className="text-[8px] font-mono border border-magenta-500/30 text-magenta-400 px-2 py-0.5 rounded">RUST</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {activeTab === 'contact' && (
+                      <div className="max-w-xl mx-auto text-center space-y-8 py-4">
+                        <h2 className="text-4xl font-black italic uppercase tracking-tighter">Initiate Sync</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           <button className="flex items-center justify-center gap-3 p-4 border border-white/10 bg-white/5 rounded-xl hover:bg-magenta-500/20 transition-all font-mono text-xs uppercase tracking-widest">
+                             <Mail size={16} className="text-magenta-400" /> Send Comms
+                           </button>
+                           <button className="flex items-center justify-center gap-3 p-4 border border-white/10 bg-white/5 rounded-xl hover:bg-cyan-500/20 transition-all font-mono text-xs uppercase tracking-widest">
+                             <Globe size={16} className="text-cyan-400" /> Virtual Signal
+                           </button>
+                        </div>
+                        <div className="p-8 border border-white/5 rounded-2xl bg-black/40">
+                          <p className="font-mono text-[10px] text-gray-500 uppercase mb-4 tracking-[0.3em]">Channel: Secure</p>
+                          <div className="flex justify-center gap-8">
+                             {['Github', 'Twitter', 'LinkedIn'].map(s => (
+                               <a key={s} href="#" className="text-sm font-bold hover:text-cyan-400 transition-colors">/{s}</a>
+                             ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </main>
+        </div>
+
+        <footer className="mt-12 flex flex-col md:flex-row justify-between items-center px-4 opacity-50 font-mono text-[9px] uppercase tracking-[0.4em]">
+           <div className="flex gap-6">
+             <span className={isOverloaded ? "text-red-500" : ""}>LOG: {systemLog}</span>
+             <span>CPU_TEMP: {isOverloaded ? "105°C" : "34°C"}</span>
+           </div>
+           <div>MADE BY_USER_STARK // 2024.V4</div>
+        </footer>
+      </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes scan-fast { 0% { transform: translateY(-100%); } 100% { transform: translateY(400%); } }
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translate(0, 0); } 10% { transform: translate(-2px, -2px); } 20% { transform: translate(2px, 1px); } }
+        .animate-scan-fast { animation: scan-fast 2s linear infinite; }
+        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+        .animate-spin-reverse { animation: spin-reverse 4s linear infinite; }
+        .animate-slideIn { animation: slideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
+        .animate-shake { animation: shake 0.2s linear infinite; }
+        .clip-path-tech { clip-path: polygon(0% 0%, 90% 0%, 100% 30%, 100% 100%, 10% 100%, 0% 70%); }
+      `}} />
+    </div>
+  );
+};
+
+export default App;
