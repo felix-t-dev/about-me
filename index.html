@@ -348,11 +348,10 @@
             } else if (activeTab === 'projects') {
                 viewport.innerHTML = `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        ${[1, 2, 3, 4].map(i => `
                             <div class="group relative bg-black/40 border border-white/10 rounded-xl p-6 hover:translate-y-[-4px] transition-all">
                                 <div class="absolute top-0 left-0 w-1 h-0 bg-cyan-400 group-hover:h-full transition-all duration-500"></div>
                                 <div class="flex justify-between items-start mb-4">
-                                    <h3 class="font-bold text-lg uppercase tracking-tight">Mission_Archive_${i}</h3>
+                                    <h3 class="font-bold text-lg uppercase tracking-tight">Wartegg Zeitung</h3>
                                     <i data-lucide="external-link" class="text-gray-600 group-hover:text-cyan-400 w-4 h-4"></i>
                                 </div>
                                 <p class="text-xs text-gray-500 mb-4">Advanced neural interface for distributed data processing and real-time visualization.</p>
@@ -361,7 +360,19 @@
                                     <span class="text-[8px] font-mono border border-magenta-500/30 text-magenta-400 px-2 py-0.5 rounded uppercase">Rust</span>
                                 </div>
                             </div>
-                        `).join('')}
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="group relative bg-black/40 border border-white/10 rounded-xl p-6 hover:translate-y-[-4px] transition-all">
+                                <div class="absolute top-0 left-0 w-1 h-0 bg-cyan-400 group-hover:h-full transition-all duration-500"></div>
+                                <div class="flex justify-between items-start mb-4">
+                                    <h3 class="font-bold text-lg uppercase tracking-tight">Wartegg Zeitung2</h3>
+                                    <i data-lucide="external-link" class="text-gray-600 group-hover:text-cyan-400 w-4 h-4"></i>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-4">Advanced neural interface for distributed data processing and real-time visualization.</p>
+                                <div class="flex gap-2">
+                                    <span class="text-[8px] font-mono border border-cyan-500/30 text-cyan-400 px-2 py-0.5 rounded uppercase">Webgl</span>
+                                    <span class="text-[8px] font-mono border border-magenta-500/30 text-magenta-400 px-2 py-0.5 rounded uppercase">Rust</span>
+                                </div>
+                            </div>
                     </div>
                 `;
             } else if (activeTab === 'contact') {
