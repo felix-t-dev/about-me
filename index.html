@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stark Interface - Personal Portfolio</title>
+    <title>Felix Tyx // Personal Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -65,15 +65,7 @@
     <div class="fixed inset-0 pointer-events-none z-50">
         <div class="absolute top-4 right-8 flex items-center gap-6 font-mono text-[10px] opacity-60">
             <div class="flex items-center gap-2">
-                <i data-lucide="battery" id="battery-icon" class="text-green-400 w-4 h-4"></i> 
-                <span id="battery-text">100%</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <i data-lucide="wifi" id="wifi-icon" class="text-blue-400 w-4 h-4"></i> 
-                <span id="wifi-text">STABLE</span>
-            </div>
-            <div class="flex items-center gap-2">
-                <i data-lucide="settings" id="settings-icon" class="animate-spin-slow w-4 h-4"></i> v4.0.2
+                <i data-lucide="settings" id="settings-icon" class="animate-spin-slow w-4 h-4"></i> v1.0.0
             </div>
         </div>
         
@@ -88,10 +80,10 @@
                 <div class="animate-slideIn">
                     <div class="flex items-center gap-2 mb-2">
                         <div id="header-line" class="h-[2px] w-12 bg-[#01ffff]"></div>
-                        <span id="header-version" class="text-xs font-mono tracking-[0.3em] text-[#01ffff]">NEURAL_INTERFACE_V4</span>
+                        <span id="header-version" class="text-xs font-mono tracking-[0.3em] text-[#01ffff]">Personal Portfolio</span>
                     </div>
                     <h1 class="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-none" id="main-title">
-                        STARK <span id="title-accent" class="text-transparent bg-clip-text bg-gradient-to-r from-[#01ffff] via-[#ff00ff] to-[#ffcc00]" style="-webkit-background-clip: text;">LEVEL</span>
+                        FELIX <span id="title-accent" class="text-transparent bg-clip-text bg-gradient-to-r from-[#01ffff] via-[#ff00ff] to-[#ffcc00]" style="-webkit-background-clip: text;">TYX</span>
                     </h1>
                     <p class="mt-4 text-gray-400 font-mono text-sm max-w-md" id="status-desc">
                         Deploying high-fidelity digital solutions with architectural precision.
@@ -130,10 +122,10 @@
         <!-- FOOTER -->
         <footer class="mt-12 flex flex-col md:flex-row justify-between items-center px-4 opacity-50 font-mono text-[9px] uppercase tracking-[0.4em]">
             <div class="flex gap-6">
-                <span id="log-status">LOG: SYSTEM_READY</span>
-                <span id="cpu-temp">CPU_TEMP: 34°C</span>
+                <span id="log-status">LOG: SYSTEM_STABLE</span>
+                <span id="cpu-temp">CPU_TEMP: NORMAL</span>
             </div>
-            <div>MADE BY_USER_STARK // 2024.V4</div>
+            <div>MADE BY FELIX TYX // 2026.V1</div>
         </footer>
     </div>
 
@@ -192,14 +184,14 @@
             
             document.getElementById('battery-icon').classList.replace('text-green-400', 'text-red-500');
             document.getElementById('battery-icon').classList.add('animate-pulse');
-            document.getElementById('battery-text').innerText = "!! ERROR !!";
+            document.getElementById('battery-text').innerText = "CRITICAL_ERROR";
             
             document.getElementById('wifi-icon').classList.replace('text-blue-400', 'text-red-500');
             document.getElementById('wifi-text').innerText = "NO_SIGNAL";
             
             document.getElementById('log-status').innerText = "LOG: POWER_OVERLOAD_DETECTED";
             document.getElementById('log-status').classList.add('text-red-500');
-            document.getElementById('cpu-temp').innerText = "CPU_TEMP: 105°C";
+            document.getElementById('cpu-temp').innerText = "CPU_TEMP: OVERHEATING";
 
             document.getElementById('main-title').innerHTML = `ERROR <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#ff0000] to-[#990000]" style="-webkit-background-clip: text;">404</span>`;
             document.getElementById('status-desc').innerText = "CRITICAL SYSTEM OVERLOAD DETECTED. INITIATING EMERGENCY PROTOCOLS.";
@@ -227,7 +219,7 @@
             
             document.getElementById('log-status').innerText = "LOG: SYSTEM_STABLE";
             document.getElementById('log-status').classList.remove('text-red-500');
-            document.getElementById('cpu-temp').innerText = "CPU_TEMP: 34°C";
+            document.getElementById('cpu-temp').innerText = "CPU_TEMP: NORMAL";
 
             document.getElementById('main-title').innerHTML = `STARK <span id="title-accent" class="text-transparent bg-clip-text bg-gradient-to-r from-[#01ffff] via-[#ff00ff] to-[#ffcc00]" style="-webkit-background-clip: text;">LEVEL</span>`;
             document.getElementById('status-desc').innerText = "Deploying high-fidelity digital solutions with architectural precision.";
