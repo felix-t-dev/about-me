@@ -122,7 +122,7 @@
         <!-- FOOTER -->
         <footer class="mt-12 flex flex-col md:flex-row justify-between items-center px-4 opacity-50 font-mono text-[9px] uppercase tracking-[0.4em]">
             <div class="flex gap-6">
-                <span id="log-status">LOG: SYSTEM_STABLE</span>
+                <span id="log-status">LOG: SYSTEM_ACTIVE</span>
                 <span id="cpu-temp">CPU_TEMP: NORMAL</span>
             </div>
             <div>MADE BY FELIX TYX // 2026.V1</div>
@@ -307,9 +307,9 @@
                             </div>
                         </div>
                         <div class="space-y-6">
-                            <h2 class="text-3xl font-black italic uppercase">Subject_Identity</h2>
+                            <h2 class="text-3xl font-black italic uppercase">About Me</h2>
                             <p class="text-sm text-gray-400 leading-relaxed">
-                                Elite software engineer bridging code and visual fidelity. Background in computational design and systems architecture.
+                                Young software engineer.
                             </p>
                             <ul class="space-y-3 font-mono text-[10px] uppercase">
                                 <li class="flex justify-between border-b border-white/5 pb-2">
@@ -327,8 +327,8 @@
             } else if (activeTab === 'skills') {
                 viewport.innerHTML = `
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8">
-                        ${renderSkillOrb('React / Next', 95, accentCyan)}
-                        ${renderSkillOrb('Node / JS', 90, accentMagenta)}
+                        ${renderSkillOrb('Python', 95, accentCyan)}
+                        ${renderSkillOrb('Dev', 90, accentMagenta)}
                         ${renderSkillOrb('Cloud / AWS', 85, accentGold)}
                         ${renderSkillOrb('Python / AI', 75, accentCyan)}
                         ${renderSkillOrb('PostgreSQL', 88, accentMagenta)}
